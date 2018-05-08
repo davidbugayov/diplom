@@ -1,0 +1,44 @@
+
+buildscript {
+    repositories {
+        jcenter()
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'org.robolectric:robolectric-gradle-plugin:1.1.0'
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0"
+
+
+    }
+}
+
+project.afterEvaluate {
+    task bintrayUpload(group: "publishing", overwrite: true) {
+        Project proj = subprojects.find { subproj -> subproj.name.equals("myMesh")}
+        dependsOn proj.bintrayUpload
+    }
+}
+
+allprojects { thisProject ->
+
+    if(thisProject.name.equals("myMesh"))
+    {
+        apply plugin: 'com.jfrog.bintray'
+    } // if
+
+    repositories {
+        jcenter()
+        google()
+    }
+
+    apply plugin: 'idea'
+
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
+}
+

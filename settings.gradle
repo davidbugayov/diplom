@@ -1,0 +1,3 @@
+include ':myMesh', ':udapp'
+
+project(':myMesh').projectDir = new File('myMesh')
